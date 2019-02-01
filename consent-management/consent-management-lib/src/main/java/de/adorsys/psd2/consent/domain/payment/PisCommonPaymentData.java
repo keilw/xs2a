@@ -52,7 +52,7 @@ public class PisCommonPaymentData extends InstanceDependableEntity {
     private TransactionStatus transactionStatus;
 
     @Lob
-    @Column(name = "payment", nullable = false)
+    @Column(name = "payment")
     private byte[] payment;
 
     @OneToMany(cascade = CascadeType.ALL)
