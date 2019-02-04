@@ -15,7 +15,7 @@ PsuIdData was also removed as an argument from `de.adorsys.psd2.consent.psu.api.
 Provided implementation for Java interface `de.adorsys.psd2.consent.aspsp.api.piis.CmsAspspPiisFundsExportService` 
 that allows exporting PIIS consents by ASPSP account id, TPP ID and PSU ID Data.
 
-From now on corresponding endpoints are fully functional.
+From now on these endpoints are fully functional:
 
 | Method | Endpoint                                         | Description                                                                                               |
 |--------|--------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
