@@ -63,7 +63,7 @@ public class AisConsentServiceRemote implements AisConsentServiceEncrypted {
             consentRestTemplate.put(remoteAisConsentUrls.updateAisConsentStatus(), null, consentId, status);
             return true;
         } catch (CmsRestException cmsRestException) {
-            log.warn("Cannot update consent status, the consent is already deleted");
+            log.warn("Cannot update consent status, the consent is already deleted or not found");
         }
         return false;
     }
