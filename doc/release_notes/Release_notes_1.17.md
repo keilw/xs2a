@@ -6,6 +6,11 @@ to provide psu data and the payment can be retrieved without it, only by redirec
 
 This also applies for getting payment for cancellation (endpoint GET /psu-api/v1/payment/cancellation/redirect/{redirect-id} in consent-management)
 
+## Bugfix: Remove PSU Data from endpoint for getting consent by redirect id in CMS-PSU-API
+PSU Data is no longer required for getting consent by redirect id.
+As a result, headers `psu-id`, `psu-id-type`, `psu-corporate-id` and `psu-corporate-id-type` are no longer used in `psu-api/v1/ais/consent/redirect/{redirect-id}` endpoint.
+PsuIdData was also removed as an argument from `de.adorsys.psd2.consent.psu.api.CmsPsuAisService#checkRedirectAndGetConsent` method.
+
 ## Bugfix: remove discrepancies between not null constraints in migration files and constraints in Java classes
 There were some discrepancies between not null constraints specified in liquibase migration files and constraints specified in Java classes that were removed.
 Now tables created via generated DDL should have the same constraints as the tables created via liquibase.
