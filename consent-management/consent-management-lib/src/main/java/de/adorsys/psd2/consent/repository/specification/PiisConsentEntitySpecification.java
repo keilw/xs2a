@@ -92,12 +92,12 @@ public class PiisConsentEntitySpecification extends GenericSpecification {
                                                                                            @Nullable LocalDate createDateFrom,
                                                                                            @Nullable LocalDate createDateTo,
                                                                                            @Nullable String instanceId) {
-        return Specifications.<PiisConsentEntity>where(byAccountsAspspAccountId(aspspAccountId))
+        return Specifications.<PiisConsentEntity>where(byAspspAccountIdInAccounts(aspspAccountId))
                    .and(byCreationTimestamp(createDateFrom, createDateTo))
                    .and(byInstanceId(instanceId));
     }
 
-    private <T> Specification<T> byAccountsAspspAccountId(@Nullable String aspspAccountId) {
+    private <T> Specification<T> byAspspAccountIdInAccounts(@Nullable String aspspAccountId) {
         return (root, query, cb) -> {
             Join<T, TppInfoEntity> accountsJoin = root.join(ACCOUNTS_ATTRIBUTE);
             return provideSpecificationForJoinedEntityAttribute(accountsJoin, ASPSP_ACCOUNT_ID_ATTRIBUTE, aspspAccountId)
