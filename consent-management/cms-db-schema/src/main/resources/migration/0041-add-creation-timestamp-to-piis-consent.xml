@@ -27,10 +27,14 @@
         <comment>Add creation_timestamp column to piis_consent</comment>
 
         <addColumn tableName="piis_consent">
-            <column name="creation_timestamp" type="DATETIME" valueDate="${now}">
-                <constraints nullable="false"/>
-            </column>
+            <column name="creation_timestamp" type="DATETIME" valueDate="${now}"/>
         </addColumn>
+    </changeSet>
+
+    <changeSet author="ssh@adorsys.com.ua" id="2019-02-04-2">
+        <comment>Add not null constraint to creation_timestamp column</comment>
+
+        <addNotNullConstraint tableName="piis_consent" columnName="creation_timestamp" columnDataType="DATETIME"/>
     </changeSet>
 
 </databaseChangeLog>
