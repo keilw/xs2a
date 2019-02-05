@@ -16,7 +16,7 @@
 
 package de.adorsys.psd2.consent.repository.specification;
 
-import de.adorsys.psd2.consent.domain.TppInfoEntity;
+import de.adorsys.psd2.consent.domain.AccountReferenceEntity;
 import de.adorsys.psd2.consent.domain.piis.PiisConsentEntity;
 import de.adorsys.psd2.xs2a.core.psu.PsuIdData;
 import org.jetbrains.annotations.NotNull;
@@ -62,7 +62,7 @@ public class PiisConsentEntitySpecification extends GenericSpecification {
     }
 
     /**
-     * Returns specification for PiisConsentEntity entity for filtering consents by PSU ID Data, creation date and instance ID.
+     * Returns specification for PiisConsentEntity for filtering consents by PSU ID Data, creation date and instance ID.
      *
      * @param psuIdData      mandatory PSU ID data
      * @param createDateFrom optional creation date that limits resulting data to consents created after this date(inclusive)
@@ -80,7 +80,7 @@ public class PiisConsentEntitySpecification extends GenericSpecification {
     }
 
     /**
-     * Returns specification for PiisConsentEntity entity for filtering consents by aspsp account id, creation date and instance ID.
+     * Returns specification for PiisConsentEntity for filtering consents by aspsp account id, creation date and instance ID.
      *
      * @param aspspAccountId mandatory bank specific account identifier
      * @param createDateFrom optional creation date that limits resulting data to consents created after this date(inclusive)
@@ -92,14 +92,23 @@ public class PiisConsentEntitySpecification extends GenericSpecification {
                                                                                            @Nullable LocalDate createDateFrom,
                                                                                            @Nullable LocalDate createDateTo,
                                                                                            @Nullable String instanceId) {
-        return Specifications.<PiisConsentEntity>where(byAspspAccountIdInAccounts(aspspAccountId))
+        return Specifications.where(byAspspAccountIdInAccounts(aspspAccountId))
                    .and(byCreationTimestamp(createDateFrom, createDateTo))
                    .and(byInstanceId(instanceId));
     }
 
-    private <T> Specification<T> byAspspAccountIdInAccounts(@Nullable String aspspAccountId) {
+    /**
+     * Returns specification for PiisConsentEntity for filtering data by aspsp account id.
+     *
+     * <p>
+     * If optional parameter is not provided, this specification will not affect resulting data.
+     *
+     * @param aspspAccountId Bank specific account identifier
+     * @return resulting specification
+     */
+    private Specification<PiisConsentEntity> byAspspAccountIdInAccounts(@Nullable String aspspAccountId) {
         return (root, query, cb) -> {
-            Join<T, TppInfoEntity> accountsJoin = root.join(ACCOUNTS_ATTRIBUTE);
+            Join<PiisConsentEntity, AccountReferenceEntity> accountsJoin = root.join(ACCOUNTS_ATTRIBUTE);
             return provideSpecificationForJoinedEntityAttribute(accountsJoin, ASPSP_ACCOUNT_ID_ATTRIBUTE, aspspAccountId)
                        .toPredicate(root, query, cb);
         };
